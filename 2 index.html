@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zaszyvio 产品展示</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background-color: #1f1f1f;
+      border-bottom: 1px solid #333;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .lang-switcher button {
+      margin: 0 0.3rem;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 0.3rem 0.6rem;
+      cursor: pointer;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #1f1f1f;
+      padding: 0.5rem;
+    }
+    nav button {
+      background: none;
+      border: none;
+      color: #ccc;
+      margin: 0 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    nav button:hover {
+      color: #fff;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+    }
+    .product-card {
+      background-color: #1e1e1e;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .product-card img {
+      max-width: 100%;
+      border-radius: 0.5rem;
+    }
+    .product-card a {
+      display: block;
+      margin-top: 0.5rem;
+      color: #4da6ff;
+      text-decoration: none;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Zaszyvio</div>
+    <div class="lang-switcher">
+      <button onclick="switchLang('zh')">中</button>
+      <button onclick="switchLang('en')">EN</button>
+      <button onclick="switchLang('ms')">BM</button>
+      <button onclick="switchLang('id')">ID</button>
+    </div>
+  </header>
+  <nav>
+    <button onclick="filterCategory('all')" data-zh="全部" data-en="All" data-ms="Semua" data-id="Semua">全部</button>
+    <button onclick="filterCategory('top')" data-zh="上衣" data-en="Tops" data-ms="Baju" data-id="Atasan">上衣</button>
+    <button onclick="filterCategory('pants')" data-zh="裤子" data-en="Pants" data-ms="Seluar" data-id="Celana">裤子</button>
+    <button onclick="filterCategory('jacket')" data-zh="外套" data-en="Jackets" data-ms="Jaket" data-id="Jaket">外套</button>
+    <button onclick="filterCategory('set')" data-zh="套装" data-en="Sets" data-ms="Set" data-id="Set">套装</button>
+  </nav>
+  <main class="product-grid" id="productGrid">
+    <!-- 示例产品 -->
+    <div class="product-card" data-category="top">
+      <img src="https://via.placeholder.com/150" alt="产品1">
+      <a href="https://shopee.com.my/" target="_blank">产品 1</a>
+    </div>
+    <div class="product-card" data-category="pants">
+      <img src="https://via.placeholder.com/150" alt="产品2">
+      <a href="https://shopee.com.my/" target="_blank">产品 2</a>
+    </div>
+    <!-- 添加更多产品... -->
+  </main>
+
+  <script>
+    let currentLang = 'zh';
+
+    function switchLang(lang) {
+      currentLang = lang;
+      document.querySelectorAll('nav button').forEach(btn => {
+        btn.textContent = btn.getAttribute(`data-${lang}`);
+      });
+    }
+
+    function filterCategory(category) {
+      document.querySelectorAll('.product-card').forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
