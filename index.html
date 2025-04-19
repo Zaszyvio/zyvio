@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zaszyvio</title>
+  
+<style>
+.product {
+  background: linear-gradient(to bottom right, #1a1a1a, #121212);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background: #0f0f0f;
+      color: #fff;
+    }
+
+
+    header {
+      background: linear-gradient(145deg, #1e1e1e, #111);
+      padding: 2.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .language-switcher select, .category-nav a {
+      background: #222;
+      color: #fff;
+      border: none;
+      padding: 0.5rem;
+      border-radius: 5px;
+      margin: 0.2rem;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .category-nav {
+      margin-top: 1rem;
+    }
+
+
+    .search-bar {
+      margin-top : 1rem;
+      text-align: center;
+    }
+    
+    
+    .search-bar input {
+      
+      padding: 0.6rem 1rem;
+      width: 80%;
+      max-width: 400px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #222;
+      color:#fff;
+    }
+    
+    
+    h1 {
+      font-size: 3rem;
+      letter-spacing: 2px;
+      margin: 0;
+    }
+
+    .tagline {
+      font-size: 1.1rem;
+      color: #aaa;
+      margin-top: 0.5rem;
+    }
+
+    section {
+      padding: 2rem 1.5rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #333;
+      padding-bottom: 0.5rem;
+    }
+
+      .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product:hover {
+      transform: scale(1.02) translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+    }
+    
+
+    .product img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .product h3 {
+      font-size: 1.1rem;
+      margin: 0.8rem 1rem 0.3rem;
+      color: #fff;
+    }
+
+    .product p {
+      font-size: 1rem;
+      margin: 0 1rem 0.8rem;
+      color: #ccc;
+    }
+
+    .product a {
+      display: inline-block;
+      margin: 0 1rem 1rem;
+      padding: 0.4rem 1rem;
+      background-color: #00d5ff;
+      color: #000;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    .product a:hover {
+      background-color: #00bcd4;
+    }
+
+    footer {
+      background: #111;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    .contact-us {
+      margin-top: 3rem;
+      text-align: center;
+    }
+
+    .contact-us h3 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-us ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .contact-us ul li {
+      display: inline-block;
+      margin: 0 1rem;
+    }
+
+    .contact-us ul li a {
+      color: #00d5ff;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .product a {
+        font-size: 0.95rem;
+      }
+
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+   }
+  #add-product-section {
+  border-radius: 16px;
+  background: #1a1a1a;
+  padding: 2rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  margin: 2rem 0;
+}
+
+#add-product-section h2 {
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+#add-product-section input,
+#add-product-section select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 8px;
+  background: #2c2c2c;
+  color: #fff;
+}
+
+#add-product-section button {
+  background-color: #ff5722;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#add-product-section button:hover {
+  background-color: #e64a19;
+}
+  </style>
+</head>
+<body>
+  <header>
+
+    <nav>
+      <div class="language-switcher">
+        <label for="language-select" style="color: #fff; margin-right: 0.5rem;">🌐</label>
+        <select id="language-select" onchange="changeLanguage()">
+          <option value="zh">中文</option>
+        </select>
+      </div>
+      <div class="category-nav">
+        <a href="#contact">联系</a>
+      </div>
+    </nav>
+     <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="搜索商品名称（短袖，裤，冰丝）" onkeyup="filterProducts(event)" />
+    </div>
+<script>
+  function filterProducts(event) {
+   if(event && event.key !=="Enter") return;
+
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const products = document.querySelectorAll(".product");
+
+    products.forEach(product => {
+      const title = product.querySelector("h3").innerText.toLowerCase();
+      product.style.display = title.includes(input) ? "block" : "none";
+    });
+  }
+</script>
+    <h1>Zaszyvio</h1>
+    <p class="tagline">潮流风格，Shopee 店铺精选推荐</p>
+  </header>
+  
+  
+  <section id="tops">
+    <h2>上衣 / Tops</h2>
+    <div class="products" data-category="tops">
+      <div class="product" data-category="tops">
+        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7renh-m8fsxjsucbknc2.webp" alt="夏季美式复古潮牌短袖" />
+        <h3>夏季美式复古潮牌短袖</h3>
+        <p>RM19</p>
+        <a href="https://my.shp.ee/FCvdjaw">查看商品</a>
+      </div>
+      <div class="product" data-category="tops">
+        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7reoz-m89eqxa9d86a0d.webp" alt="日系复古短袖衬衫" />
+        <h3>日系复古短袖衬衫</h3>
+        <p>RM29</p>
+        <a href="https://my.shp.ee/rvshY1s">查看商品</a>
+      </div>
+      <div class="product" data-category="tops">
+        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7rd3p-m7y3m5y1hztd5a.webp" />
+        <h3>重磅纯棉短袖T恤</h3>
+        <p>RM39</p>
+        <a href="https://my.shp.ee/eQWvn62">查看商品</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="pants">
+    <h2>裤子 / Pants</h2>
+    <div class="products" data-category="pants">
+      <div class="product" data-category="pants">
+        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7rd3y-m7pdaskfu94753.webp" />
+        <h3>复古直筒牛仔裤</h3>
+        <p>RM64</p>
+        <a href="https://my.shp.ee/KoM1dD1">查看商品</a>
+      </div>
+      <div class="product" data-category="pants">
+        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7renx-m8afkdhoh5sn28.webp" />
+        <h3>美式速干工装裤</h3>
+        <p>RM36</p>
+        <a href="https://my.shp.ee/KFUqDH5">查看商品</a>
+      </div>
+      <div class="product" data-category="pants">
+        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7rep4-m89ev1e0o8c6c8.webp" />
+        <h3>美式冰丝短裤</h3>
+        <p>RM13</p>
+        <a href="https://my.shp.ee/mA361jL">查看商品</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="outerwear">
+    <h2>外套 / Outerwear</h2>
+    <div class="products" data-category="outerwear">
+      <div class="product" data-category="outerwear">
+        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7rd3r-m7hvk35vqweu64.webp" />
+        <h3>战术户外防水夹克</h3>
+        <p>RM40</p>
+        <a href="https://my.shp.ee/7YYcyoG">查看商品</a>
+      </div>
+      <div class="product" data-category="outerwear">
+        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7renl-m8ftxbolokk53f.webp" />
+        <h3>日系拼色复古夹克</h3>
+        <p>RM39</p>
+        <a href="https://my.shp.ee/fpYFY96">查看商品</a>
+      </div>
+      <div class="product" data-category="outerwear">
+        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7rd6r-m7y4cft1ci3mf9.webp" />
+        <h3>美式皮衣外套</h3>
+        <p>RM74</p>
+        <a href="https://my.shp.ee/KBpriWA">查看商品</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-us" id="contact">
+    <h3>Contact Us</h3>
+    <ul>
+      <li><a href="https://www.instagram.com/zaszyvio" target="_blank">Instagram</a></li>
+      <li><a href="https://shopee.com.my/zaszyvio" target="_blank">Shopee</a></li>
+    </ul>
+  </section>
+
+  <footer id="footer-secret">
+  &copy; 2025 Zaszyvio. All rights reserved.
+</footer>
+
+ <script>
+    function changeLanguage() {
+      const lang = document.getElementById('language-select').value;
+      alert(`语言切换功能尚未实现，选中语言: ${lang}`);
+    }
+  </script>
+ 
+<section id="add-product-section" style="display: none; padding: 2rem; background: #1a1a1a;">
+  <h2>添加商品 🛍️</h2>
+  <form onsubmit="addProduct(event)">
+    <input type="text" id="product-name" placeholder="商品名称" required>
+    <input type="text" id="product-price" placeholder="价格（如 RM39）" required>
+    <input type="url" id="product-image" placeholder="图片链接" required>
+    <input type="url" id="product-link" placeholder="Shopee 商品链接" required>
+    <select id="product-category" required>
+  <option value="tops">上衣</option>
+  <option value="pants">裤子</option>
+  <option value="outerwear">外套</option> 
+  <option value="sets">套装</option>
+</select>
+    <button type="submit">添加商品</button>
+</form>
+</section>
+
+<script>
+  function addProduct(event) {
+    event.preventDefault();
+    alert("功能尚未实现 ，敬请期待！");
+  }
+
+    const name = document.getElementById('product-name').value;
+    const price = document.getElementById('product-price').value;
+    const image = document.getElementById('product-image').value;
+    const link = document.getElementById('product-link').value;
+    const category = document.getElementById('product-category').value;
+
+    const productHTML = `
+      <div class="product" data-category="${category}">
+        <img src="${image}" />
+        <h3>${name}</h3>
+        <p>${price}</p>
+        <a href="${link}" target="_blank">查看商品</a>
+      </div>
+    `;
+
+    const container = document.querySelector(`#${category} .products`);
+  if (container) {
+    container.insertAdjacentHTML('beforeend', productHTML);
+    alert('✅ 商品已添加！');
+  } else {
+    alert('❌ 无法找到对应的分类容器');
+  }
+
+  event.target.reset();
+}
+</script>
+
+
+<script>
+  let secretClickCount = 0;
+  let secretClickTimeout;
+
+  document.getElementById("footer-secret").addEventListener("click", () => {
+    secretClickCount++;
+    clearTimeout(secretClickTimeout);
+
+    secretClickTimeout = setTimeout(() => {
+      secretClickCount = 0;
+    }, 1000);
+
+    if (secretClickCount === 5) {
+      secretClickCount = 0;
+      const password = prompt("请输入管理员密码：");
+      if (password === "Atcs.051711") {
+        const adder = document.getElementById("add-product-section");
+        if (adder) adder.style.display = "block";
+      } else {
+        alert("密码错误 ❌");
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
