@@ -295,8 +295,6 @@
   <div class="language-switcher">
     <label for="language-select">🌐</label>
     <select id="language-select" onchange="changeLanguage()">
-  el.textContent = translations[lang][key] || el.textContent;
-});)">
       <option value="zh">中文</option>
       <option value="en">English</option>
     </select>
@@ -329,7 +327,7 @@
 </header>
 <section id="tops">
   <h2 class="category-title">
-    <span data-translate="tops_cn">上衣</span>
+    <span data-translate="tops">上衣/Tops</span>
     <span class="separator">/</span>
     <span data-translate="tops_en">Tops</span>
   </h2>
@@ -556,6 +554,7 @@
  <script>
  const translations = {
   en: {
+    tops: "Tops"
     tops_cn: "Tops",
     pants_cn: "Pants",
     outerwear_cn: "Outerwear",
@@ -570,8 +569,13 @@
     tactical_jacket: "Tactical Jacket",
     colorblock_jacket: "Colorblock Jacket",
     leather_jacket: "Leather Jacket"
-  },
+    tops_en: "Tops"
+    view_product: "View Product",
+    currency_symbol: "MYR"
+   }，
+   
   zh: {
+    tops: "上衣",
     tops_cn: "上衣",
     pants_cn: "裤子",
     outerwear_cn: "外套",
@@ -586,8 +590,11 @@
     tactical_jacket: "战术户外防水夹克",
     colorblock_jacket: "日系拼色复古夹克",
     leather_jacket: "美式皮衣外套"
+    tops_en: "上衣"
+    view_product: "查看商品",
+    currency_symbol: "RM"
   }
-};
+   }；
    
 function changeLanguage() {
   const lang = document.getElementById('language-select').value;
@@ -602,21 +609,22 @@ function changeLanguage() {
     el.textContent = translations[lang][key] || el.textContent;
   });
 
+    document.querySelectorAll('[data-translate="currency_symbol"]').forEach(span => {
+    span.textContent = translations[lang].currency_symbol;
+  });
+  
 document.querySelectorAll('[data-translate-alt]').forEach(img => {
     const key = img.getAttribute('data-translate-alt');
     img.alt = translations[lang][key] || img.alt;
   });
+  
+ document.querySelectorAll('.category-title [data-translate]').forEach(el => {
+    const key = el.getAttribute('data-translate');
+    el.textContent = translations[lang][key] || el.textContent;
+  });
+}
 
-document.querySelectorAll('.category-title [data-translate]').forEach(el => {
-    const key = el.getAttribute('data-translate');
-    el.textContent = translations[lang][key] || el.textContent;
-  });
-}
-   document.querySelectorAll('.category-title [data-translate]').forEach(el => {
-    const key = el.getAttribute('data-translate');
-    el.textContent = translations[lang][key] || el.textContent;
-  });
-}
+
 function filterCategory(category) {
   document.querySelectorAll('.category-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.key === category);
