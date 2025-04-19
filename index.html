@@ -6,17 +6,6 @@
   <title>Zaszyvio</title>
   
 <style>
-.product {
-  background: linear-gradient(to bottom right, #1a1a1a, #121212);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.6s ease forwards;
-}
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -37,6 +26,11 @@
       background: #0f0f0f;
       color: #fff;
     }
+
+    .category-btn.active {
+     background: #00d5ff !important;
+     color: #000 !important;
+   }
 
 
     header {
@@ -117,51 +111,65 @@
       padding-bottom: 0.5rem;
     }
 
-      .products {
+   .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
+      padding: 0 1rem;
+      margin-bottom: 2rem;
     }
 
-    .product:hover {
+   .product-card {
+      background: linear-gradient(to bottom right, #1a1a1a, #121212);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .product-card:hover {
       transform: scale(1.02) translateY(-5px);
       box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
     }
-    
+  .product-card {
+  animation: fadeInUp 0.6s ease forwards;
+  will-change: transform, opacity;
+}
+  .product-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
 
-    .product img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    .product h3 {
-      font-size: 1.1rem;
-      margin: 0.8rem 1rem 0.3rem;
-      color: #fff;
-    }
+.product-card h3 {
+  font-size: 1.1rem;
+  margin: 0 1rem 0.5rem;
+  color: #fff;
+}
 
-    .product p {
-      font-size: 1rem;
-      margin: 0 1rem 0.8rem;
-      color: #ccc;
-    }
+.product-card p {
+  color: #00d5ff;
+  font-size: 1.2rem;
+  margin: 0 1rem 1rem;
+}
 
-    .product a {
-      display: inline-block;
-      margin: 0 1rem 1rem;
-      padding: 0.4rem 1rem;
-      background-color: #00d5ff;
-      color: #000;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
-      transition: background 0.2s;
-    }
-
-    .product a:hover {
-      background-color: #00bcd4;
-    }
-
+.product-card a {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: #00d5ff;
+  color: #000;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0 1rem 1rem;
+  transition: background 0.3s;
+}
+  
     footer {
       background: #111;
       text-align: center;
@@ -197,6 +205,28 @@
     }
 
     @media (max-width: 768px) {
+   .product-card h3 {
+    font-size: 1rem;
+    margin: 0.5rem;
+  }
+
+   .product-card a {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
+
+   .product-card p {
+    font-size: 1.1rem;
+  }
+   .products-grid {
+    grid-template-columns: 1fr;
+    padding: 0 0.5rem;
+  }
+  
+   .product-card {
+    padding: 0.8rem;
+  }
+    
       h1 {
         font-size: 2.2rem;
       }
@@ -209,7 +239,16 @@
         flex-direction: column;
         align-items: flex-start;
       }
-   }
+      .product-card a {
+    min-width: 120px;
+    padding: 12px;
+    text-align: center;
+  }
+  
+  .products-grid {
+    gap: 1rem;
+  }
+}
   #add-product-section {
   border-radius: 16px;
   background: #1a1a1a;
@@ -252,111 +291,255 @@
 <body>
   <header>
 
-    <nav>
-      <div class="language-switcher">
-        <label for="language-select" style="color: #fff; margin-right: 0.5rem;">🌐</label>
-        <select id="language-select" onchange="changeLanguage()">
-          <option value="zh">中文</option>
-          <option value="en">English</option> 
-          <option value="ms">Bahasa Melayu</option>
-        </select>
-      </div>
-      <div class="category-nav">
-        <a href="#contact">联系</a>
-      </div>
-    </nav>
+   <nav>
+  <div class="language-switcher">
+    <label for="language-select">🌐</label>
+    <select id="language-select" onchange="changeLanguage()">
+  el.textContent = translations[lang][key] || el.textContent;
+});)">
+      <option value="zh">中文</option>
+      <option value="en">English</option>
+    </select>
+  </div>
+  
+  <div class="category-nav">
+    <a href="#contact">联系</a>
+  </div>
+</nav>
      <div class="search-bar">
       <input type="text" id="searchInput" placeholder="搜索商品名称（短袖，裤，冰丝）" onkeyup="filterProducts(event)" />
     </div>
 <script>
   function filterProducts(event) {
-   if(event && event.key !=="Enter") return;
+    if(event) event.preventDefault();
+  const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+  const activeCategory = document.querySelector('.category-btn.active')?.dataset.key || 'all';
 
-    const input = document.getElementById("searchInput").value.toLowerCase();
-    const products = document.querySelectorAll(".product");
-
-    products.forEach(product => {
-      const title = product.querySelector("h3").innerText.toLowerCase();
-      product.style.display = title.includes(input) ? "block" : "none";
-    });
-  }
+  document.querySelectorAll(".product-card").forEach(product => {
+    const title = product.querySelector("h3").textContent.toLowerCase();
+    const matchSearch = title.includes(searchTerm);
+    const matchCategory = activeCategory === 'all' || product.dataset.category === activeCategory;
+    
+    product.style.display = (matchSearch && matchCategory) ? "block" : "none";
+  });
+}
 </script>
     <h1>Zaszyvio</h1>
     <p class="tagline">潮流风格，Shopee 店铺精选推荐</p>
-  </header>
-  
-  
-  <section id="tops">
-    <h2>上衣 / Tops</h2>
-    <div class="products" data-category="tops">
-      <div class="product" data-category="tops">
-        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7renh-m8fsxjsucbknc2.webp" alt="夏季美式复古潮牌短袖" />
-        <h3>夏季美式复古潮牌短袖</h3>
-        <p>RM19</p>
-        <a href="https://my.shp.ee/FCvdjaw">查看商品</a>
-      </div>
-      <div class="product" data-category="tops">
-        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7reoz-m89eqxa9d86a0d.webp" alt="日系复古短袖衬衫" />
-        <h3>日系复古短袖衬衫</h3>
-        <p>RM29</p>
-        <a href="https://my.shp.ee/rvshY1s">查看商品</a>
-      </div>
-      <div class="product" data-category="tops">
-        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7rd3p-m7y3m5y1hztd5a.webp" />
-        <h3>重磅纯棉短袖T恤</h3>
-        <p>RM39</p>
-        <a href="https://my.shp.ee/eQWvn62">查看商品</a>
-      </div>
+</header>
+<section id="tops">
+  <h2 class="category-title">
+    <span data-translate="tops_cn">上衣</span>
+    <span class="separator">/</span>
+    <span data-translate="tops_en">Tops</span>
+  </h2>
+    
+    <div class="products-grid" data-category="tops">
+      
+     <div class="product-card" data-category="tops">
+      <img src="https://down-my.img.susercontent.com/file/sg-11134201-7renh-m8fsxjsucbknc2.webp" 
+                  alt="夏季美式复古潮牌短袖"
+                  data-translate-alt="summer_retro_tshirt"
+                  loading="lazy"
+                  decoding="async"
+                  width="300"
+                  height="400">
+      <h3 data-translate="summer_retro_tshirt">夏季美式复古潮牌短袖</h3>
+      <p data-translate-price="19">
+       <span data-translate="currency_symbol">RM</span>
+       <span data-translate="price_value">19</span>
+     </p>
+     <a href="https://my.shp.ee/FCvdjaw" 
+         data-translate="view_product"
+         aria-label="View product details">
+         查看商品
+     </a> 
     </div>
-  </section>
+      
+    <div class="product-card" data-category="tops">
+      <img src="https://down-my.img.susercontent.com/file/sg-11134201-7reoz-m89eqxa9d86a0d.webp"
+           alt="日系复古短袖衬衫"
+           data-translate-alt="japanese_shirt"
+           loading="lazy"
+           decoding="async"
+           width="300"
+           height="400">
+      <h3 data-translate="japanese_shirt">日系复古短袖衬衫</h3>
+      <p data-translate-price="29">
+        <span data-translate="currency_symbol">RM</span>
+        <span data-translate="price_value">29</span>
+      </p>
+     <a href="https://my.shp.ee/rvshY1s" 
+         data-translate="view_product"
+         aria-label="View product details">
+         查看商品
+      </a>
+    </div>
+
+    <div class="product-card" data-category="tops">
+      <img src="https://down-my.img.susercontent.com/file/sg-11134201-7rd3p-m7y3m5y1hztd5a.webp"
+           alt="重磅纯棉短袖T恤"
+           data-translate-alt="cotton_tshirt"
+           loading="lazy"
+           decoding="async"
+           width="300"
+           height="400">
+      <h3 data-translate="cotton_tshirt">重磅纯棉短袖T恤</h3>
+     <p data-translate-price="39">
+        <span data-translate="currency_symbol">RM</span>
+        <span data-translate="price_value">39</span>
+      </p>
+      <a href="https://my.shp.ee/eQWvn62" 
+         data-translate="view_product"
+         aria-label="View product details">
+         查看商品
+      </a>
+    </div>
+      
+  </div>
+</section> 
 
   <section id="pants">
-    <h2>裤子 / Pants</h2>
-    <div class="products" data-category="pants">
-      <div class="product" data-category="pants">
-        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7rd3y-m7pdaskfu94753.webp" />
-        <h3>复古直筒牛仔裤</h3>
-        <p>RM64</p>
-        <a href="https://my.shp.ee/KoM1dD1">查看商品</a>
-      </div>
-      <div class="product" data-category="pants">
-        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7renx-m8afkdhoh5sn28.webp" />
-        <h3>美式速干工装裤</h3>
-        <p>RM36</p>
-        <a href="https://my.shp.ee/KFUqDH5">查看商品</a>
-      </div>
-      <div class="product" data-category="pants">
-        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7rep4-m89ev1e0o8c6c8.webp" />
-        <h3>美式冰丝短裤</h3>
-        <p>RM13</p>
-        <a href="https://my.shp.ee/mA361jL">查看商品</a>
-      </div>
+  <h2 class="category-title">
+    <span data-translate="pants_cn">裤子</span>
+    <span class="separator">/</span>
+    <span data-translate="pants_en">Pants</span>
+  </h2>
+
+ <div class="products-grid" data-category="pants">
+    
+  <div class="product-card" data-category="pants">
+      <img src="https://down-my.img.susercontent.com/file/sg-11134201-7rd3y-m7pdaskfu94753.webp"
+           alt="复古直筒牛仔裤"
+           data-translate-alt="straight_jeans"
+           loading="lazy"
+           decoding="async"
+           width="300"
+           height="400">
+      <h3 data-translate="straight_jeans">复古直筒牛仔裤</h3>
+      <p data-translate-price="64">
+        <span data-translate="currency_symbol">RM</span>
+        <span data-translate="price_value">64</span>
+      </p>
+      <a href="https://my.shp.ee/KoM1dD1" 
+         data-translate="view_product"
+         aria-label="View product details">
+         查看商品
+      </a>
     </div>
-  </section>
+    
+      <div class="product-card" data-category="pants">
+      <img src="https://down-my.img.susercontent.com/file/sg-11134201-7renx-m8afkdhoh5sn28.webp"
+           alt="美式速干工装裤"
+           data-translate-alt="cargo_pants"
+           loading="lazy"
+           decoding="async"
+           width="300"
+           height="400">
+      <h3 data-translate="cargo_pants">美式速干工装裤</h3>
+      <p data-translate-price="36">
+        <span data-translate="currency_symbol">RM</span>
+        <span data-translate="price_value">36</span>
+      </p>
+      <a href="https://my.shp.ee/KFUqDH5" 
+         data-translate="view_product"
+         aria-label="View product details">
+         查看商品
+      </a>
+    </div>
+
+     <div class="product-card" data-category="pants">
+      <img src="https://down-my.img.susercontent.com/file/sg-11134201-7rep4-m89ev1e0o8c6c8.webp"
+           alt="美式冰丝短裤"
+           data-translate-alt="silk_shorts"
+           loading="lazy"
+           decoding="async"
+           width="300"
+           height="400">
+      <h3 data-translate="silk_shorts">美式冰丝短裤</h3>
+      <p data-translate-price="13">
+        <span data-translate="currency_symbol">RM</span>
+        <span data-translate="price_value">13</span>
+      </p>
+      <a href="https://my.shp.ee/mA361jL" 
+         data-translate="view_product"
+         aria-label="View product details">
+         查看商品
+      </a>
+    </div>
+ </div> 
+</section>
 
   <section id="outerwear">
-    <h2>外套 / Outerwear</h2>
-    <div class="products" data-category="outerwear">
-      <div class="product" data-category="outerwear">
-        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7rd3r-m7hvk35vqweu64.webp" />
-        <h3>战术户外防水夹克</h3>
-        <p>RM40</p>
-        <a href="https://my.shp.ee/7YYcyoG">查看商品</a>
-      </div>
-      <div class="product" data-category="outerwear">
-        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7renl-m8ftxbolokk53f.webp" />
-        <h3>日系拼色复古夹克</h3>
-        <p>RM39</p>
-        <a href="https://my.shp.ee/fpYFY96">查看商品</a>
-      </div>
-      <div class="product" data-category="outerwear">
-        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7rd6r-m7y4cft1ci3mf9.webp" />
-        <h3>美式皮衣外套</h3>
-        <p>RM74</p>
-        <a href="https://my.shp.ee/KBpriWA">查看商品</a>
-      </div>
+  <h2 class="category-title">
+    <span data-translate="outerwear_cn">外套</span>
+    <span class="separator">/</span>
+    <span data-translate="outerwear_en">Outerwear</span>
+  </h2>
+    
+ <div class="products-grid" data-category="outerwear">
+   
+      <div class="product-card" data-category="outerwear">
+      <img src="https://down-my.img.susercontent.com/file/sg-11134201-7rd3r-m7hvk35vqweu64.webp"
+           alt="战术户外防水夹克"
+           data-translate-alt="tactical_jacket"
+           loading="lazy"
+           decoding="async"
+           width="300"
+           height="400">
+      <h3 data-translate="tactical_jacket">战术户外防水夹克</h3>
+      <p data-translate-price="40">
+        <span data-translate="currency_symbol">RM</span>
+        <span data-translate="price_value">40</span>
+      </p>
+      <a href="https://my.shp.ee/7YYcyoG" 
+         data-translate="view_product"
+         aria-label="View product details">
+         查看商品
+      </a>
     </div>
-  </section>
+   
+     <div class="product-card" data-category="outerwear">
+      <img src="https://down-my.img.susercontent.com/file/sg-11134201-7renl-m8ftxbolokk53f.webp"
+           alt="日系拼色复古夹克"
+           data-translate-alt="colorblock_jacket"
+           loading="lazy"
+           decoding="async"
+           width="300"
+           height="400">
+      <h3 data-translate="colorblock_jacket">日系拼色复古夹克</h3>
+      <p data-translate-price="39">
+        <span data-translate="currency_symbol">RM</span>
+        <span data-translate="price_value">39</span>
+      </p>
+      <a href="https://my.shp.ee/fpYFY96" 
+         data-translate="view_product"
+         aria-label="View product details">
+         查看商品
+      </a>
+    </div>
+   
+      <div class="product-card" data-category="outerwear">
+      <img src="https://down-my.img.susercontent.com/file/sg-11134201-7rd6r-m7y4cft1ci3mf9.webp"
+           alt="美式皮衣外套"
+           data-translate-alt="leather_jacket"
+           loading="lazy"
+           decoding="async"
+           width="300"
+           height="400">
+      <h3 data-translate="leather_jacket">美式皮衣外套</h3>
+      <p data-translate-price="74">
+        <span data-translate="currency_symbol">RM</span>
+        <span data-translate="price_value">74</span>
+      </p>
+      <a href="https://my.shp.ee/KBpriWA" 
+         data-translate="view_product"
+         aria-label="View product details">
+         查看商品
+      </a>
+    </div>
+  </div>
+</section>
 
   <section class="contact-us" id="contact">
     <h3>Contact Us</h3>
@@ -371,40 +554,107 @@
 </footer>
 
  <script>
-  function changeLanguage() {
-    const lang = document.getElementById('language-select').value;
-
-    document.querySelectorAll('nav button').forEach(btn => {
-      const label = btn.getAttribute(`data-${lang}`);
-      if (label) {
-        btn.textContent = label;
-      }
-    });
+ const translations = {
+  en: {
+    tops_cn: "Tops",
+    pants_cn: "Pants",
+    outerwear_cn: "Outerwear",
+    view_product: "View Product",
+    currency_symbol: "MYR",
+    summer_retro_tshirt: "Retro Summer T-shirt",
+    japanese_shirt: "Japanese Style Shirt",
+    cotton_tshirt: "Heavyweight Cotton T-shirt",
+    straight_jeans: "Straight-leg Jeans",
+    cargo_pants: "Cargo Pants",
+    silk_shorts: "Silk Shorts",
+    tactical_jacket: "Tactical Jacket",
+    colorblock_jacket: "Colorblock Jacket",
+    leather_jacket: "Leather Jacket"
+  },
+  zh: {
+    tops_cn: "上衣",
+    pants_cn: "裤子",
+    outerwear_cn: "外套",
+    view_product: "查看商品",
+    currency_symbol: "RM",
+    summer_retro_tshirt: "夏季复古短袖",
+    japanese_shirt: "日系衬衫",
+    cotton_tshirt: "重磅纯棉短袖T恤",
+    straight_jeans: "复古直筒牛仔裤",
+    cargo_pants: "美式速干工装裤",
+    silk_shorts: "美式冰丝短裤",
+    tactical_jacket: "战术户外防水夹克",
+    colorblock_jacket: "日系拼色复古夹克",
+    leather_jacket: "美式皮衣外套"
   }
+};
+   
+function changeLanguage() {
+  const lang = document.getElementById('language-select').value;
+  
+ document.querySelectorAll('[data-key]').forEach(btn => {
+    const key = btn.getAttribute('data-key');
+    btn.textContent = translations[lang][`${key}_cn`] || btn.textContent;
+  });
+
+ document.querySelectorAll('[data-translate]').forEach(el => {
+    const key = el.getAttribute('data-translate');
+    el.textContent = translations[lang][key] || el.textContent;
+  });
+
+document.querySelectorAll('[data-translate-alt]').forEach(img => {
+    const key = img.getAttribute('data-translate-alt');
+    img.alt = translations[lang][key] || img.alt;
+  });
+
+document.querySelectorAll('.category-title [data-translate]').forEach(el => {
+    const key = el.getAttribute('data-translate');
+    el.textContent = translations[lang][key] || el.textContent;
+  });
+}
+   document.querySelectorAll('.category-title [data-translate]').forEach(el => {
+    const key = el.getAttribute('data-translate');
+    el.textContent = translations[lang][key] || el.textContent;
+  });
+}
+function filterCategory(category) {
+  document.querySelectorAll('.category-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.key === category);
+  });
+  
+  document.querySelectorAll('.product-card').forEach(item => {
+    const show = category === 'all' || item.dataset.category === category;
+    item.style.display = show ? 'block' : 'none';
+  });
+     filterProducts();
+}
 </script>
  
 <section id="add-product-section" style="display: none; padding: 2rem; background: #1a1a1a;">
   <h2>添加商品 🛍️</h2>
   <form onsubmit="addProduct(event)">
     <input type="text" id="product-name" placeholder="商品名称" required>
-    <input type="text" id="product-price" placeholder="价格（如 RM39）" required>
+   <input type="text" 
+       id="product-price" 
+       placeholder="价格（如 39.99）"
+       pattern="^[0-9]+(\.[0-9]{1,2})?$"
+       title="请输入数字（可包含两位小数，如：39.99）"
+       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')"
+       required>
     <input type="url" id="product-image" placeholder="图片链接" required>
     <input type="url" id="product-link" placeholder="Shopee 商品链接" required>
     <select id="product-category" required>
   <option value="tops">上衣</option>
   <option value="pants">裤子</option>
   <option value="outerwear">外套</option> 
-  <option value="sets">套装</option>
 </select>
     <button type="submit">添加商品</button>
 </form>
 </section>
 
 <script>
-  function addProduct(event) {
-    event.preventDefault();
-    alert("功能尚未实现 ，敬请期待！");
-  }
+function addProduct(event) {
+  event.preventDefault();
 
     const name = document.getElementById('product-name').value;
     const price = document.getElementById('product-price').value;
@@ -412,23 +662,58 @@
     const link = document.getElementById('product-link').value;
     const category = document.getElementById('product-category').value;
 
-    const productHTML = `
-      <div class="product" data-category="${category}">
-        <img src="${image}" />
-        <h3>${name}</h3>
-        <p>${price}</p>
-        <a href="${link}" target="_blank">查看商品</a>
-      </div>
-    `;
-
-    const container = document.querySelector(`#${category} .products`);
-  if (container) {
-    container.insertAdjacentHTML('beforeend', productHTML);
-    alert('✅ 商品已添加！');
-  } else {
-    alert('❌ 无法找到对应的分类容器');
+    if (!name || !price || !image || !link || !category) {
+    alert("请填写所有必填字段");
+    return;
   }
+  if (!/^https?:\/\//.test(image)) {
+    alert("图片链接需要以 http:// 或 https:// 开头");
+    return;
+  }
+  if (!/^https?:\/\//.test(link)) {
+    alert("商品链接需要以 http:// 或 https:// 开头");
+    return;
+  }
+  const translationKey = name.replace(/\s+/g, '_') + Date.now();
+  const enName = prompt('请输入商品英文名称：', name);
 
+    translations['zh'][translationKey] = name;
+    translations['en'][translationKey] = enName || name;
+    translations['ms'][translationKey] = enName || name; 
+    translations['id'][translationKey] = enName || name;
+  
+  
+  const priceValue = price.replace(/[^0-9.]/g, '') || '0';
+  const currencySymbol = 'RM';
+  const productHTML = `
+    <div class="product-card" data-category="${category}">
+      <img src="${image}" 
+           loading="lazy"
+           decoding="async"
+           width="300"
+           height="400"
+           alt="${name}"
+           data-translate-alt="${name.replace(/\s+/g, '_')}">
+      <h3 data-translate="${name.replace(/\s+/g, '_')}">${name}</h3>
+      <p data-translate-price="${priceValue}">
+        <span data-translate="currency_symbol">${currencySymbol}</span>
+        <span data-translate="price_value">${priceValue}</span>
+      </p>
+      <a href="${link}" 
+         data-translate="view_product"
+         aria-label="View product details"
+         target="_blank">查看商品</a>
+    </div>
+  `;
+ const container = document.querySelector(`#${category} .products-grid`);
+ const newProduct = container.lastElementChild;
+  newProduct.style.animation = 'fadeInUp 0.6s ease forwards';
+  
+  alert('✅ 商品已成功添加！');
+ }
+  } else {
+    alert('❌ 找不到对应分类，请先创建分类');
+  }
   event.target.reset();
 }
 </script>
@@ -458,6 +743,5 @@
     }
   });
 </script>
-
 </body>
 </html>
