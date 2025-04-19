@@ -326,11 +326,9 @@
     <p class="tagline">潮流风格，Shopee 店铺精选推荐</p>
 </header>
 <section id="tops">
-  <h2 class="category-title">
-    <span data-translate="tops">上衣/Tops</span>
-    <span class="separator">/</span>
-    <span data-translate="tops_en">Tops</span>
-  </h2>
+<h2 class="category-title">
+  <span data-translate="tops"></span>
+</h2>
     
     <div class="products-grid" data-category="tops">
       
@@ -675,6 +673,8 @@ function addProduct(event) {
     alert("商品链接需要以 http:// 或 https:// 开头");
     return;
   }
+  const translationKey = name.replace(/\s+/g, '_');
+translations[lang][translationKey] = lang === 'zh' ? name : enName;
   const translationKey = name.replace(/\s+/g, '_') + Date.now();
   const enName = prompt('请输入商品英文名称：', name);
 
@@ -685,8 +685,12 @@ function addProduct(event) {
   
   
   const priceValue = price.replace(/[^0-9.]/g, '') || '0';
-  const currencySymbol = 'RM';
+  const currencySymbol = translations[lang].currency_symbol; 
   const productHTML = `
+  <p data-translate-price="${priceValue}">
+    <span data-translate="currency_symbol"></span>
+    <span data-translate="price_value">${priceValue}</span>
+  </p>`;
     <div class="product-card" data-category="${category}">
       <img src="${image}" 
            loading="lazy"
@@ -707,11 +711,11 @@ function addProduct(event) {
     </div>
   `;
  const container = document.querySelector(`#${category} .products-grid`);
- const newProduct = container.lastElementChild;
-  newProduct.style.animation = 'fadeInUp 0.6s ease forwards';
-  
-  alert('✅ 商品已成功添加！');
- }
+  if (container) {
+    container.insertAdjacentHTML('beforeend', productHTML);
+    const newProduct = container.lastElementChild;
+    newProduct.style.animation = 'fadeInUp 0.6s ease forwards';
+    alert('✅ 商品已成功添加！');
   } else {
     alert('❌ 找不到对应分类，请先创建分类');
   }
