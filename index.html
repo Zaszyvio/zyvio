@@ -257,7 +257,8 @@
         <label for="language-select" style="color: #fff; margin-right: 0.5rem;">🌐</label>
         <select id="language-select" onchange="changeLanguage()">
           <option value="zh">中文</option>
-          <option value="en">英文</option> 
+          <option value="en">English</option> 
+          <option value="ms">Bahasa Melayu</option>
         </select>
       </div>
       <div class="category-nav">
@@ -370,11 +371,17 @@
 </footer>
 
  <script>
-    function changeLanguage() {
-      const lang = document.getElementById('language-select').value;
-      alert(`语言切换功能尚未实现，选中语言: ${lang}`);
-    }
-  </script>
+  function changeLanguage() {
+    const lang = document.getElementById('language-select').value;
+
+    document.querySelectorAll('nav button').forEach(btn => {
+      const label = btn.getAttribute(`data-${lang}`);
+      if (label) {
+        btn.textContent = label;
+      }
+    });
+  }
+</script>
  
 <section id="add-product-section" style="display: none; padding: 2rem; background: #1a1a1a;">
   <h2>添加商品 🛍️</h2>
