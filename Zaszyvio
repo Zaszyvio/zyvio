@@ -27,10 +27,6 @@
     transform: translateY(0);
   }
 }
-.product:hover {
-  transform: scale(1.02);
-}
-
     * {
       box-sizing: border-box;
     }
@@ -128,9 +124,10 @@
     }
 
     .product:hover {
-      transform: translateY(-5px);
+      transform: scale(1.02) translateY(-5px);
       box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
     }
+    
 
     .product img {
       width: 100%;
@@ -212,6 +209,7 @@
         flex-direction: column;
         align-items: flex-start;
       }
+   }
   #add-product-section {
   border-radius: 16px;
   background: #1a1a1a;
@@ -266,8 +264,21 @@
       </div>
     </nav>
      <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="搜索商品名称（短袖，裤，冰丝）" onkeyup="filterProducts()" />
+      <input type="text" id="searchInput" placeholder="搜索商品名称（短袖，裤，冰丝）" onkeyup="filterProducts(event)" />
     </div>
+<script>
+  function filterProducts(event) {
+   if(event && event.key !=="Enter") return;
+
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const products = document.querySelectorAll(".product");
+
+    products.forEach(product => {
+      const title = product.querySelector("h3").innerText.toLowerCase();
+      product.style.display = title.includes(input) ? "block" : "none";
+    });
+  }
+</script>
     <h1>Zaszyvio</h1>
     <p class="tagline">潮流风格，Shopee 店铺精选推荐</p>
   </header>
@@ -277,13 +288,13 @@
     <h2>上衣 / Tops</h2>
     <div class="products" data-category="tops">
       <div class="product" data-category="tops">
-        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7renh-m8fsxjsucbknc2.webp" />
+        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7renh-m8fsxjsucbknc2.webp" alt="夏季美式复古潮牌短袖" />
         <h3>夏季美式复古潮牌短袖</h3>
         <p>RM19</p>
         <a href="https://my.shp.ee/FCvdjaw">查看商品</a>
       </div>
       <div class="product" data-category="tops">
-        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7reoz-m89eqxa9d86a0d.webp" />
+        <img src="https://down-my.img.susercontent.com/file/sg-11134201-7reoz-m89eqxa9d86a0d.webp" alt="日系复古短袖衬衫" />
         <h3>日系复古短袖衬衫</h3>
         <p>RM29</p>
         <a href="https://my.shp.ee/rvshY1s">查看商品</a>
@@ -377,13 +388,15 @@
   <option value="outerwear">外套</option> 
   <option value="sets">套装</option>
 </select>
-    <button type="submit">添加</button>
+    <button type="submit">添加商品</button>
 </form>
 </section>
 
 <script>
   function addProduct(event) {
     event.preventDefault();
+    alert("功能尚未实现 ，敬请期待！");
+  }
 
     const name = document.getElementById('product-name').value;
     const price = document.getElementById('product-price').value;
